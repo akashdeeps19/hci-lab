@@ -32,7 +32,10 @@ function draw(){
         fill(0);
         textSize(40);
         textAlign(CENTER,CENTER);
-        text('SERIAL POSITION EFFECT',width/2,height/2);
+        text('SERIAL POSITION EFFECT',width/2,100);
+        textSize(16)
+        let s = '1. On the next screen,you will be shown a list of 8 animals.\n2. You will have only 10 seconds to look at the animals list and and remember them,\nafter which the screen will automatically move to the next task.\n3. You will then be asked to recall as many animals as you can from this list\n4. Click the START button to start';
+        text(s,width/2,height/2)
         startButton.show()
     }
     if(state == 1){
