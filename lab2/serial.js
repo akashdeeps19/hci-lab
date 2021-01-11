@@ -66,14 +66,22 @@ function draw(){
     if(state == 3){
         background(bgc);
         let tot = 0;
+        let missed = "You missed the following animals :\n";
         for(let animal of showed){
             if(selected.includes(animal))
                 tot++;
+            else 
+                missed += animal + ", ";
         }
+        
         fill(0);
         textSize(40);
         textAlign(CENTER,CENTER);
-        text(`Recall % = ${tot/showed.length*100}`,width/2,height/2);
+        text(`Recall % = ${tot/showed.length*100}`,width/2,200);
+        if(tot != showed.length){
+            textSize(18);
+            text(missed, width/2,300)
+        }
         restartButton.show()
     }
 }
