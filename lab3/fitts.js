@@ -3,8 +3,10 @@ let circles = [];
 let currCircle;
 let total = 10;
 let currCount = 1;
+let canvas;
+let datar = []
 function setup(){
-    let canvas = createCanvas(600, 600);
+    canvas = createCanvas(600, 600);
     canvas.parent('canvascontainer');
     currCircle = new Circle(random(width), random(height), random(10,60));
     circles.push(currCircle);
@@ -30,10 +32,69 @@ function draw(){
         text(`${currCount}/${total}`,width/2,500);
     }
     if(state == 2){
-        fill(0);
-        textSize(18);
-        textAlign(CENTER,CENTER);
-        text(`Graph`,width/2,500);
+        // fill(0);
+        // textSize(18);
+        // textAlign(CENTER,CENTER);
+        // text(`Graph`,width/2,500);
+        noLoop();
+        circles.pop()
+        for(let circle of circles){
+            datar.push({x : circle.r, y : circle.time});
+        }
+        datar.sort((a,b) => (a.x - b.x))
+        var myChart = new Chart(canvas, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Radius vs Reaction time',
+                    
+                    data: datar,
+                    lineTension: 0.2,
+                    fill: false,
+                    borderColor: 'blue',
+                    backgroundColor: 'white',
+                    pointBorderColor: 'blue',
+                    pointBackgroundColor: 'blue',
+                    pointRadius: 5,
+                    pointHoverRadius: 10,
+                    pointHitRadius: 30,
+                }],
+
+            },
+            
+            options: {
+                legend : {labels: { fontSize: 24 } },
+                scales: {
+                    
+                    xAxes: [{
+                        type: 'linear',  
+                        display: true, 
+                        scaleLabel: {
+                             display: true, 
+                             labelString: 'Radius', 
+                             fontSize : 24
+                        },
+                        ticks:{
+                            fontSize : 20
+                        }
+                   }], 
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true, 
+                            labelString: 'Reaction time(ms)', 
+                            fontSize : 24
+                       },
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize : 20
+                        }
+                    }]
+                },
+                responsive: false
+            }
+        });
+        document.getElementById('defaultCanvas0').style.backgroundColor = 'rgba(240,240,240,1)'
+        document.getElementById('defaultCanvas0').style.display = ''
     }
 }
 
