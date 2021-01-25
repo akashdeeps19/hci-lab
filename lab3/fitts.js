@@ -4,12 +4,16 @@ let currCircle;
 let total = 10;
 let currCount = 1;
 let canvas;
-let datar = []
+let prevx,prevy;
+let datar = [];
+let datad = [];
 function setup(){
-    canvas = createCanvas(600, 600);
+    canvas = createCanvas(700, 600);
     canvas.parent('canvascontainer');
-    currCircle = new Circle(random(width), random(height), random(10,60));
+    currCircle = new Circle(random(50, width-50), random(50,height-50), random(10,70));
     circles.push(currCircle);
+    prevx = width/2;
+    prevy = height/2;
 }
 
 function draw(){
@@ -32,16 +36,14 @@ function draw(){
         text(`${currCount}/${total}`,width/2,500);
     }
     if(state == 2){
-        // fill(0);
-        // textSize(18);
-        // textAlign(CENTER,CENTER);
-        // text(`Graph`,width/2,500);
         noLoop();
         circles.pop()
         for(let circle of circles){
             datar.push({x : circle.r, y : circle.time});
+            datad.push({x : circle.dist, y : circle.time});
         }
-        datar.sort((a,b) => (a.x - b.x))
+        datar.sort((a,b) => (a.x - b.x));
+        datad.sort((a,b) => (a.x - b.x) )
         var myChart = new Chart(canvas, {
             type: 'line',
             data: {
@@ -58,7 +60,23 @@ function draw(){
                     pointRadius: 5,
                     pointHoverRadius: 10,
                     pointHitRadius: 30,
-                }],
+                },
+                // {
+
+                //     label: 'Distance covered vs Reaction time',
+                    
+                //     data: datad,
+                //     lineTension: 0.2,
+                //     fill: false,
+                //     borderColor: 'red',
+                //     backgroundColor: 'white',
+                //     pointBorderColor: 'red',
+                //     pointBackgroundColor: 'red',
+                //     pointRadius: 5,
+                //     pointHoverRadius: 10,
+                //     pointHitRadius: 30,
+                // }
+                ],
 
             },
             
@@ -87,7 +105,8 @@ function draw(){
                         ticks: {
                             beginAtZero: true,
                             fontSize : 20
-                        }
+                        },
+                        stacked: true
                     }]
                 },
                 responsive: false
@@ -103,7 +122,9 @@ function mouseClicked(){
         state = 1;
     if(state == 1){
         if(currCircle.check(mouseX, mouseY)){
-            currCircle = new Circle(random(width), random(height), random(10,60));
+            prevx = currCircle.x;
+            prevy = currCircle.y;
+            currCircle = new Circle(random(50, width-50), random(50,height-50), random(10,60));
             circles.push(currCircle);
             currCount++;
         }
@@ -118,7 +139,9 @@ class Circle {
         this.color = color(random(255), random(255), random(255));
         this.clicked = false;
         this.time = -1;
-
+        this.dist = (this.x-prevx)*(this.x-prevx) + (this.y-prevy)*(this.y-prevy);
+        this.dist = map(this.dist, 0, width*width+height*height, 10,500);
+        // this.dist = map
         this.show = function () {
             if(this.time == -1)
                 this.time = millis();
