@@ -1,6 +1,7 @@
 let state = 0;
 let circles = [];
 let currCircles = [];
+let pickCircle;
 let total = 10;
 let currCount = 1;
 let totCircles = 10;
@@ -11,6 +12,7 @@ let datar = [];
 let datad = [];
 let sr = 10;
 let lr = 70;
+let colors = ['red', 'blue', 'green', 'yellow', 'orange', 'black', 'cyan', 'purple', 'pink', 'skyblue']
 
 function setup(){
     canvas = createCanvas(700, 600);
@@ -19,6 +21,12 @@ function setup(){
     prevy = height/2;
     currCircles = createCircles();
     instr = random()<0.5?'smallest':'biggest';
+    if(instr == 'smallest'){
+        pickCircle = currCircles.reduce((prev, curr) => prev.r < curr.r ? prev : curr);
+    }
+    else{
+        pickCircle = currCircles.reduce((prev, curr) => prev.r > curr.r ? prev : curr);
+    }
 }
 
 function draw(){
@@ -37,10 +45,9 @@ function draw(){
         for(let currCircle of currCircles)
             currCircle.show();
         fill(0);
-        // textSize(18);
         textAlign(CENTER,CENTER);
         textSize(24);
-        text(`Select the ${instr} circle - ${currCount}/${total}`, width/2,30);
+        text(`Select the ${instr} ${pickCircle.color} circle - ${currCount}/${total}`, width/2,30);
     }
     if(state == 2){
         noLoop();
@@ -133,14 +140,18 @@ function mouseClicked(){
     if(state == 0)
         state = 1;
     if(state == 1){
-        for(let currCircle of currCircles){
-            if(currCircle.check(mouseX, mouseY)){
-                prevx = currCircle.x;
-                prevy = currCircle.y;
-                circles.push(currCircle);
-                currCircles = createCircles();
-                instr = random()<0.5?'smallest':'biggest';
-                currCount++;
+        if(pickCircle.check(mouseX, mouseY)){
+            prevx = pickCircle.x;
+            prevy = pickCircle.y;
+            circles.push(pickCircle);
+            currCircles = createCircles();
+            instr = random()<0.5?'smallest':'biggest';
+            currCount++;
+            if(instr == 'smallest'){
+                pickCircle = currCircles.reduce((prev, curr) => prev.r < curr.r ? prev : curr);
+            }
+            else{
+                pickCircle = currCircles.reduce((prev, curr) => prev.r > curr.r ? prev : curr);
             }
         }
     }
@@ -171,14 +182,14 @@ class Circle {
         this.x = x;
         this.y = y;
         this.r = r
-        this.color = color(random(255), random(255), random(255));
+        this.color = random(colors);
         this.clicked = false;
         this.time = -1;
         this.dist = (this.x-prevx)*(this.x-prevx) + (this.y-prevy)*(this.y-prevy);
         this.show = function () {
             if(this.time == -1)
                 this.time = millis();
-            fill(this.color);
+            fill(color(this.color));
             ellipse(this.x, this.y, this.r*2)
         };
 
