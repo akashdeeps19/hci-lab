@@ -9,6 +9,8 @@ let prevx,prevy;
 let instr;
 let datar = [];
 let datad = [];
+let sr = 10;
+let lr = 70;
 
 function setup(){
     canvas = createCanvas(700, 600);
@@ -49,7 +51,7 @@ function draw(){
         }
         for(let circle of circles){
             datar.push({x : circle.r, y : circle.time});
-            circle.dist = map(circle.dist, 0, maxd, 10, 70);
+            circle.dist = map(circle.dist, 0, maxd, sr, lr);
             datad.push({x : circle.dist, y : circle.time});
         }
         datar.sort((a,b) => (a.x - b.x));
@@ -150,7 +152,7 @@ function createCircles(){
     while(created.length < totCircles){
         let x = random(50, width-50);
         let y = random(80, height-50);
-        let r = random(10,70);
+        let r = random(sr,lr);
         let add = true;
         for(let circle of created){
             if(circle.check(x,y,r)){

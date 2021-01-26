@@ -7,13 +7,16 @@ let canvas;
 let prevx,prevy;
 let datar = [];
 let datad = [];
+let sr = 10;
+let lr = 70;
 function setup(){
     canvas = createCanvas(700, 600);
     canvas.parent('canvascontainer');
-    currCircle = new Circle(random(50, width-50), random(50,height-50), random(10,70));
-    circles.push(currCircle);
     prevx = width/2;
     prevy = height/2;
+    currCircle = new Circle(random(50, width-50), random(50,height-50), random(sr,lr));
+    circles.push(currCircle);
+   
 }
 
 function draw(){
@@ -37,9 +40,15 @@ function draw(){
     }
     if(state == 2){
         noLoop();
-        circles.pop()
+        circles.pop();
+        let maxd = 0;
+        for(let circle of circles){
+            maxd = max(maxd, circle.dist);
+        }
+
         for(let circle of circles){
             datar.push({x : circle.r, y : circle.time});
+            circle.dist = map(circle.dist, 0, maxd, sr, lr);
             datad.push({x : circle.dist, y : circle.time});
         }
         datar.sort((a,b) => (a.x - b.x));
@@ -61,21 +70,21 @@ function draw(){
                     pointHoverRadius: 10,
                     pointHitRadius: 30,
                 },
-                // {
+                {
 
-                //     label: 'Distance covered vs Reaction time',
+                    label: 'Distance covered vs Reaction time',
                     
-                //     data: datad,
-                //     lineTension: 0.2,
-                //     fill: false,
-                //     borderColor: 'red',
-                //     backgroundColor: 'white',
-                //     pointBorderColor: 'red',
-                //     pointBackgroundColor: 'red',
-                //     pointRadius: 5,
-                //     pointHoverRadius: 10,
-                //     pointHitRadius: 30,
-                // }
+                    data: datad,
+                    lineTension: 0.2,
+                    fill: false,
+                    borderColor: 'red',
+                    backgroundColor: 'white',
+                    pointBorderColor: 'red',
+                    pointBackgroundColor: 'red',
+                    pointRadius: 5,
+                    pointHoverRadius: 10,
+                    pointHitRadius: 30,
+                }
                 ],
 
             },
@@ -89,7 +98,7 @@ function draw(){
                         display: true, 
                         scaleLabel: {
                              display: true, 
-                             labelString: 'Radius', 
+                             labelString: 'Radius/Distance', 
                              fontSize : 24
                         },
                         ticks:{
@@ -124,7 +133,7 @@ function mouseClicked(){
         if(currCircle.check(mouseX, mouseY)){
             prevx = currCircle.x;
             prevy = currCircle.y;
-            currCircle = new Circle(random(50, width-50), random(50,height-50), random(10,60));
+            currCircle = new Circle(random(50, width-50), random(50,height-50), random(sr,lr));
             circles.push(currCircle);
             currCount++;
         }
@@ -140,8 +149,7 @@ class Circle {
         this.clicked = false;
         this.time = -1;
         this.dist = (this.x-prevx)*(this.x-prevx) + (this.y-prevy)*(this.y-prevy);
-        this.dist = map(this.dist, 0, width*width+height*height, 10,500);
-        // this.dist = map
+       
         this.show = function () {
             if(this.time == -1)
                 this.time = millis();
