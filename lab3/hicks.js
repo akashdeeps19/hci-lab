@@ -2,7 +2,7 @@ let state = 0;
 let circles = [];
 let currCircles = [];
 let pickCircle;
-let total = 10;
+let total = 15;
 let currCount = 1;
 let totCircles = 10;
 let canvas;
@@ -33,6 +33,8 @@ function draw(){
     background(240);
     if(state == 0){
         fill(0);
+        textSize(16);
+        text('1.) Many circles of different position, radius and color appears on the screen after clicking start.\n\n2.) Click on the circle that fits the instruction given.\n\n3.) After clicking 15 circles a graph of the reaction times and covered distance is displayed.',width/2,200)
         textSize(40);
         textAlign(CENTER,CENTER);
         text('Hick Hyman\'s law',width/2,100);
@@ -162,7 +164,7 @@ function createCircles(){
     
     while(created.length < totCircles){
         let x = random(50, width-50);
-        let y = random(80, height-50);
+        let y = random(100, height-50);
         let r = random(sr,lr);
         let add = true;
         for(let circle of created){

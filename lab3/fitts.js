@@ -1,7 +1,7 @@
 let state = 0;
 let circles = [];
 let currCircle;
-let total = 10;
+let total = 15;
 let currCount = 1;
 let canvas;
 let prevx,prevy;
@@ -23,6 +23,8 @@ function draw(){
     background(240);
     if(state == 0){
         fill(0);
+        textSize(16);
+        text('1.) Circle will appear on the screen after clicking start.\n\n2.) Click on the circle and another circle with different position, radius and color appears\n\n3.) After clicking 15 circles a graph of the reaction times and covered distance is displayed.',width/2,200)
         textSize(40);
         textAlign(CENTER,CENTER);
         text('Fitt\'s law',width/2,100);
