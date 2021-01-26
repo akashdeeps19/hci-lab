@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
+
+
+ 
+</head>
+<body>
+
+<div class="navbar">
+  <a href="#home">Home</a>
+  
+  <div class="dropdown">
+    <button class="dropbtn">Electronics
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Camera</a>
+      <a href="#">Airpods</a>
+      <a href="#">Mobile</a>
+      <a href="#">Video game</a>
+      <a href="#">DVD player</a>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn">House-hold applicances 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      
+     
+      <a href="#">Dish washer</a>
+      <a href="#">Water Heater</a>
+      <a href="#">Air Conditioner</a>
+      <a href="#">Sofa</a>
+      <a href="#" onClick="timer.stop()">Stove</a>
+      <a href="#">Couch</a>
+      
+      <a href="#">Bed</a>
+      <a href="#" >Study Table</a>
+    </div>
+  </div> 
+  <a href="#contact">About Us</a>
+</div>
+
+
+
+<div style="padding:0 16px" class = "instructions">
+  <h1>Shop</h1>
+  <p> Explore the different products from the product tab </p>
+  <p>Buy a Stove</p> 
+  <p>Click on the Start button button.</p> 
+  <p> Once you find the stove, click on it</p>
+  <p> The timer stops</p>
+  <p> You can reset the timer if you want </p>
+
+  <div class="timer">
+      <span class="hour">00</span>:<span class="minute">00</span>:<span class="second">10</span>
+  </div>
+  <div class="control">
+    <button onClick="timer.start(1000)">Start</button> 
+    <button onClick="timer.stop()">Stop</button> 
+    <button onClick="timer.reset(0)">Reset</button> 
+            
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
