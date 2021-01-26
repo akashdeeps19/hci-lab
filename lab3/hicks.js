@@ -67,7 +67,7 @@ function draw(){
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Radius vs Reaction time',
+                    label: 'Reaction time vs Radius',
                     
                     data: datar,
                     lineTension: 0.2,
@@ -82,7 +82,7 @@ function draw(){
                 },
                 {
 
-                    label: 'Distance covered vs Reaction time',
+                    label: 'Reaction time vs Distance covered',
                     
                     data: datad,
                     lineTension: 0.2,
